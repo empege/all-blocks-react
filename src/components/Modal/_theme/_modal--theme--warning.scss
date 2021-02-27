@@ -1,0 +1,29 @@
+// modal--theme--warning
+.modal--theme--warning {
+  .modal {
+    &__background {
+      background-color: $color-background;
+    }
+    &__inner {
+      border: 2px solid $color-warning-secondary;
+      background: $color-warning-primary;
+      color: $color-warning-text-primary;
+    }
+    &__exit-button {
+      background: none;
+      border: none;
+      color: $color-warning-secondary;
+      &:hover {
+        color: $color-warning-secondary;
+      }
+    }
+    &__button {
+      color: $color-warning-text-primary;
+      background: $color-warning-primary;
+      &:hover {
+        color: $color-warning-text-secondary;
+        background: $color-warning-secondary;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@import '../../variables';
+
+.sidebar {
+  position: fixed;
+  left: -$sidebar-width;
+  top: 0;
+  bottom: 0;
+  width: $sidebar-width;
+  background: #EFEBE9;
+  border-right: 3px solid $color-primary-dark;
+  color: $color-secondary-text;
+  text-align: center;
+  &--active {left: 0;}
+  &__title {
+    @include displayFlex(space-between, center);
+    padding: 0 20px;
+  }
+  &__icon {
+    font-size: 1.5em;
+    cursor: pointer;
+    &--show {
+      position: absolute;
+      top: 20px;
+      right: -40px;
+      color: $color-secondary-text;
+    }
+  }
+}
+
+.sidebar__accordion {
+  $accordion-content-max-height: 400px;
+  .accordion__header--active + .accordion__content {
+    max-height: $accordion-content-max-height;
+  }
+}

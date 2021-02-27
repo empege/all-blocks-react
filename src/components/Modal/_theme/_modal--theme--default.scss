@@ -1,0 +1,29 @@
+// modal--theme--default
+.modal--theme--default {
+  .modal {
+    &__background {
+      background-color: $color-background;
+    }
+    &__inner {
+      border: 2px solid $color-default-secondary;
+      background: $color-default-primary;
+      color: $color-default-text-primary;
+    }
+    &__exit-button {
+      background: none;
+      border: none;
+      color: $color-default-secondary;
+      &:hover {
+        color: $color-default-secondary;
+      }
+    }
+    &__button {
+      color: $color-default-text-primary;
+      background: $color-default-primary;
+      &:hover {
+        color: $color-default-text-secondary;
+        background: $color-default-secondary;
+      }
+    }
+  }
+}

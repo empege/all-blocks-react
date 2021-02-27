@@ -1,0 +1,135 @@
+@import '../../variables';
+
+* {box-sizing: border-box;}
+
+// Sizes
+$vps-s: 16px;
+$vps-m: 20px;
+$vps-l: 24px;
+
+// Mixins
+@mixin positionCenter($position){
+  position: $position;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+@mixin modalFixedPosition($position){
+  position: $position;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+// Colors
+$color-transparent: transparent;
+$color-background: rgba(26, 26, 26, 0.8);
+// modal--theme--default
+$color-default-primary: whitesmoke;
+$color-default-secondary: #1a1a1a;
+$color-default-text-primary: #1a1a1a;
+$color-default-text-secondary: whitesmoke;
+// modal--theme--warning
+$color-warning-primary: #F44336;
+$color-warning-secondary: whitesmoke;
+$color-warning-text-primary: whitesmoke;
+$color-warning-text-secondary: #F44336;
+// modal--theme--dark
+$color-dark-primary: #1a1a1a;
+$color-dark-secondary: #F44336;
+$color-dark-text-primary: #F44336;
+$color-dark-text-secondary: whitesmoke;
+
+.modal {
+  display: none;
+  opacity: 0;
+  @include modalFixedPosition(fixed);
+  &__background {
+    @include modalFixedPosition(absolute);
+  }
+  &__inner {
+    @include positionCenter(absolute);
+    padding: $vps-l;
+    width: 90%;
+    border-radius: 5px;
+    border: 2px solid $color-transparent;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $vps-l;
+  }
+  &__title {
+    font-size: 2em;
+  }
+  &__exit-button {
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    cursor: pointer;
+  }
+  &__paragraph {
+    margin-bottom: $vps-l;
+  }
+  &__footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__button {
+    margin: 0 5px;
+  }
+}
+
+// Modal Appearance Styles
+.modal--active--default {
+  opacity: 1;
+  display: block;
+}
+.modal--active--fadein {
+  display: block;
+  animation: fadein .8s forwards;
+}
+.modal--active--slidein {
+  display: block;
+  animation: fadein .5s forwards;
+}
+.modal--active--slidein .modal__inner {
+  top: 20%;
+  animation: slidein .8s forwards;
+}
+@keyframes fadein {
+  100% {opacity: 1;}
+}
+@keyframes slidein {
+  100% {top: 50%; opacity: 1;}
+}
+
+@media screen and (min-width: $break-s){
+  .modal {
+    &__inner {
+      width: 500px;
+    }
+  }
+}
+
+// Themes
+@import '_theme/modal--theme--default';
+@import '_theme/modal--theme--warning';
+@import '_theme/modal--theme--dark';
+
+// Should be sepparate block
+.button {
+  padding: 5px 10px;
+  font-size: $vps-m;
+  border: none;
+  border-radius: 5px;
+  color: $color-default-text-primary;
+  cursor: pointer;
+  &:hover {
+    background-color: $color-default-text-primary;
+    color: $color-default-text-primary;
+  }
+}

@@ -1,0 +1,8 @@
+.pageTemplate {
+  max-width: 1000px;
+  margin: 0 auto;
+  &__title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}

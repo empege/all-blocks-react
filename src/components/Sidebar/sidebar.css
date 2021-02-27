@@ -1,0 +1,48 @@
+.display-none {
+  display: none !important;
+}
+
+.sidebar {
+  position: fixed;
+  left: -400px;
+  top: 0;
+  bottom: 0;
+  width: 400px;
+  background: #EFEBE9;
+  border-right: 3px solid #212838;
+  color: black;
+  text-align: center;
+}
+
+.sidebar--active {
+  left: 0;
+}
+
+.sidebar__title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 20px;
+}
+
+.sidebar__icon {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.sidebar__icon--show {
+  position: absolute;
+  top: 20px;
+  right: -40px;
+  color: black;
+}
+
+.sidebar__accordion .accordion__header--active + .accordion__content {
+  max-height: 400px;
+}

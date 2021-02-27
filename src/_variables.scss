@@ -1,0 +1,27 @@
+$faq-page-wrapper-width: 1000px;
+$sidebar-width: 400px;
+
+// Max break point
+$break-s: 576px;
+$break-m: 768px;
+$break-l: 992px;
+$break-xl: 1440px;
+
+// Colors
+$color-primary: #3c4053;
+$color-primary-dark: #212838;
+$color-primary-text: white;
+
+$color-secondary: white;
+$color-secondary-dark: #EFEBE9;
+$color-secondary-text: black;
+
+// General classes
+.display-none { display: none !important; }
+
+// Mixins
+@mixin displayFlex($jc, $ai) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+}

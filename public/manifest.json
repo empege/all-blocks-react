@@ -1,0 +1,6 @@
+{
+  "short_name": "My Block Components",
+  "name": "My Block Components",
+  "start_url": ".",
+  "display": "standalone"
+}

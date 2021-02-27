@@ -1,0 +1,29 @@
+// modal--theme--dark
+.modal--theme--dark {
+  .modal {
+    &__background {
+      background-color: $color-background;
+    }
+    &__inner {
+      border: 2px solid $color-dark-secondary;
+      background: $color-dark-primary;
+      color: $color-dark-text-primary;
+    }
+    &__exit-button {
+      background: none;
+      border: none;
+      color: $color-dark-secondary;
+      &:hover {
+        color: $color-dark-text-secondary;
+      }
+    }
+    &__button {
+      color: $color-dark-text-primary;
+      background: $color-dark-primary;
+      &:hover {
+        color: $color-dark-text-secondary;
+        background: $color-dark-secondary;
+      }
+    }
+  }
+}
