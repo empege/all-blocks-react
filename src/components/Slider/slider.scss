@@ -1,0 +1,41 @@
+@import '../../variables';
+
+* {box-sizing: border-box;}
+
+$slide-img-height: 500px;
+$slide-img-width: 700px;
+
+.slider {
+  position: relative;
+  max-width: $slide-img-width;
+  max-height: $slide-img-height;
+  margin: 30px auto;
+  &__arrow {
+    position: absolute;
+    font-size: 5em;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  &__arrow--left {
+    left: 5px;
+  }
+  &__arrow--right {
+    right: 5px;
+  }
+  &__contents {
+  }
+  &__image {
+    width: 100%;
+  }
+  &__description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px 20px;
+    background: rgba(255,255,255,0.5);
+  }
+  &__title {margin: 5px 0;}
+
+}

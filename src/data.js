@@ -54,4 +54,26 @@ export const modalData = {
   title: 'Warning!',
   text: 'Some text here... Some text here... Some text here... Some text here... Some text here... Some text here...'
 }
-  ;
+
+export const sliderData = [
+  {
+    url: 'https://picsum.photos/id/1001/700/500',
+    title: 'Dad and son',
+    text: 'Yo Sonny would you look at that xD'
+  },
+  {
+    url: 'https://picsum.photos/id/1002/700/500',
+    title: 'Ocean...',
+    text: 'It\'s blue and stuff'
+  },
+  {
+    url: 'https://picsum.photos/id/1003/700/500',
+    title: 'Deer',
+    text: 'Cute UwuUwu'
+  },
+  {
+    url: 'https://picsum.photos/id/1004/700/500',
+    title: 'Lovers',
+    text: 'Beware of the Dark ma lovers! xD'
+  }
+]
