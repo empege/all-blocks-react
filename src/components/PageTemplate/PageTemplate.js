@@ -4,7 +4,8 @@ import Accordion from '../Accordion/Accordion'
 import Sidebar from '../Sidebar/Sidebar'
 import Modal from '../Modal/Modal'
 import Slider from '../Slider/Slider'
-import { pageAccordionData, sliderData } from '../../data'
+import Slidermh from '../Slidermh/Slidermh'
+import { pageAccordionData, sliderData, sliderMHData1 } from '../../data'
 
 const PageTemplate = () => {
   return (
@@ -14,6 +15,7 @@ const PageTemplate = () => {
       <Sidebar />
       <Slider data={sliderData} />
       <Modal theme={'dark'} enterStyle={'fadein'} />
+      <Slidermh data={sliderMHData1} />
     </div>
   )
 }

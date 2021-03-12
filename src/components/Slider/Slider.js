@@ -34,14 +34,14 @@ const Slider = ({ data }) => {
 
 
   return (
-    <div className="slider">
-      <div className="slider__arrow slider__arrow--left" onClick={() => slideLeft()}>◀️</div>
-      <div className="slider__arrow slider__arrow--right" onClick={() => slideRight()}>▶️</div>
-      <div className="slider__contents">
-        <img src={data[slide].url} alt="slider" className="slider__image" />
-        <div className="slider__description">
-          <h1 className="slider__title">{data[slide].title}</h1>
-          <p className="slider__text">{data[slide].text}</p>
+    <div className="slider-simple">
+      <div className="slider-simple__arrow slider-simple__arrow--left" onClick={() => slideLeft()}>◀️</div>
+      <div className="slider-simple__arrow slider-simple__arrow--right" onClick={() => slideRight()}>▶️</div>
+      <div className="slider-simple__contents">
+        <img src={data[slide].url} alt="slider" className="slider-simple__image" />
+        <div className="slider-simple__description">
+          <h1 className="slider-simple__title">{data[slide].title}</h1>
+          <p className="slider-simple__text">{data[slide].text}</p>
         </div>
 
       </div>
