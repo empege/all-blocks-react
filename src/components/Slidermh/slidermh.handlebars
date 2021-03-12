@@ -1,0 +1,43 @@
+<section class="slider js-slider">
+  <button class="slider__arrow slider__arrow--left js-arrow-left
+    "> {{!-- Ovaj path nema smisla, radice samo ako se koristi u faq. Ne znam kako da namestim relative path da radi u handlebars, samo absolute radi ili relative od fajla u kom se ovo zapravo koristi i u kom se poziva --}}<img src="../sliderMH/arrowleft.png" alt="arrow-left" class="js-slide-arrow" /> </button>
+  <button class="slider__arrow slider__arrow--right js-arrow-right"> <img src="../sliderMH/arrowright.png" alt="arrow-right" class="js-slide-arrow" /> </button>
+  <div class="slider__inner js-slider-inner">
+    {{#each data}}
+    <a draggable="false" class="slider__slide js-slide" target="_blanc" href={{url}}>
+      <img draggable="false" class="slider__image" src={{img}} alt="slide-image">
+      <div class="slider__content">
+        <h3 class="slider__title">{{title}}</h3>
+        <p class="slider__description">{{text}}</p>
+        <div class="slider__action-btn">
+          <span class="read-more">Read More</span>
+        </div>
+      </div>
+    </a>
+    {{/each}}
+    {{#each data}}
+    <a draggable="false" target="_blanc" href={{url}} class="slider__slide js-slide">
+      <img draggable="false" src={{img}} alt="slide-image" class="slider__image">
+      <div class="slider__content">
+        <h3 class="slider__title">{{title}}</h3>
+        <p class="slider__description">{{text}}</p>
+        <div class="slider__action-btn">
+          <span class="read-more">Read More</span>
+        </div>
+      </div>
+    </a>
+    {{/each}}
+    {{#each data}}
+    <a draggable="false" target="_blanc" href={{url}} class="slider__slide js-slide">
+      <img draggable="false" src={{img}} alt="slide-image" class="slider__image">
+      <div class="slider__content">
+        <h3 class="slider__title">{{title}}</h3>
+        <p class="slider__description">{{text}}</p>
+        <div class="slider__action-btn">
+          <span class="read-more">Read More</span>
+        </div>
+      </div>
+    </a>
+    {{/each}}
+  </div>
+</section>
