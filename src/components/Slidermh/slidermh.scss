@@ -149,3 +149,7 @@ $sliderMH-width-full: 100%; // iz nekog razloga deljenje sa % radi samo kad deli
     background: url('arrow-right-green-big.svg') no-repeat;
   }
 }
+
+.notransition {
+  transition: none !important;
+}

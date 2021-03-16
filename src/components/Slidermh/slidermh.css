@@ -175,3 +175,8 @@
   width: 13px;
   background: url("arrow-right-green-big.svg") no-repeat;
 }
+
+.notransition {
+  -webkit-transition: none !important;
+  transition: none !important;
+}

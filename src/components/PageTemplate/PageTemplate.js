@@ -5,7 +5,7 @@ import Sidebar from '../Sidebar/Sidebar'
 import Modal from '../Modal/Modal'
 import Slider from '../Slider/Slider'
 import Slidermh from '../Slidermh/Slidermh'
-import { pageAccordionData, sliderData, sliderMHData1 } from '../../data'
+import { pageAccordionData, sliderData, sliderMHData1, sliderMHData2 } from '../../data'
 
 const PageTemplate = () => {
   return (
@@ -16,7 +16,12 @@ const PageTemplate = () => {
       <Slider data={sliderData} />
       <Modal theme={'dark'} enterStyle={'fadein'} />
       <Slidermh data={sliderMHData1} />
-    </div>
+      <div className="small-test" style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '100px' }}>
+        <Slidermh data={sliderMHData2} />
+        <Slidermh data={sliderMHData1} />
+      </div>
+
+    </div >
   )
 }
 

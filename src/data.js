@@ -107,3 +107,20 @@ export const sliderMHData1 = {
     },
   ]
 }
+export const sliderMHData2 = {
+  id: '2',
+  data: [
+    {
+      title: 'Award-winning air quality',
+      text: 'On the podium: Filter Cubes from MANN+HUMMEL win silver at International Paul Pietsch Award of AUTO MOTOR UND SPORT',
+      url: 'https://mann-hummel.com/en/the-company/current-topics/press-releases/2021/award-winning-air-quality/',
+      img: 'https://www.mann-hummel.com/fileadmin/_processed_/f/7/csm_MANN_HUMMEL-Filter-Cube-am-Stuttgarter-Neckartor_11931b1af1.jpg',
+    },
+    {
+      title: 'MANN+HUMMEL donates antiviral air purifiers to the Stuttgart Children\'s and Youth Hospice',
+      text: '',
+      url: 'https://www.mann-hummel.com/en/the-company/current-topics/press-releases/2021/mannhummel-donates-antiviral-air-purifiers-to-the-stuttgart-childrens-and-youth-hospice/',
+      img: 'https://www.mann-hummel.com/fileadmin/_processed_/3/c/csm_Spenden%C3%BCbergabe_von_antiviralen_Luftreinigern_der_MANN_HUMMEL_Group_an_das_Kinder-_und_Jugendhospiz_Stuttgart_9f94dc2345.jpg',
+    },
+  ]
+}
