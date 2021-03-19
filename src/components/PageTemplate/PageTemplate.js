@@ -14,7 +14,7 @@ const PageTemplate = () => {
       <Accordion data={pageAccordionData} theme={'primary'} />
       <Sidebar />
       <Slider data={sliderData} />
-      <Modal theme={'dark'} enterStyle={'fadein'} />
+      {/* <Modal theme={'dark'} enterStyle={'fadein'} /> */}
       <Slidermh data={sliderMHData1} />
       <div className="small-test" style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '100px' }}>
         <Slidermh data={sliderMHData2} />
