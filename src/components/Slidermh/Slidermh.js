@@ -2,33 +2,17 @@ import React, { useState, useEffect, useRef } from 'react'
 import './slidermh.css'
 import arrowRightImg from './arrowright.png';
 import arrowLeftImg from './arrowleft.png';
+import Slidemh from './Slidemh'
+import { componentsData } from '../../data';
 
 /* SELECTORS */
-const sliderMH = {
-  selectors: {
-    slider: 'js-slider',
-    slide: 'js-slide',
-    sliderInner: 'js-slider-inner',
-    sliderArrow: 'js-slide-arrow',
-    arrowLeft: 'js-arrow-left',
-    arrowRight: 'js-arrow-right',
-    currentSlide: 'js-current-slide',
-  },
-  selectorsCSS: {
-    slider: 'slider',
-    slide: 'slider__slide',
-    sliderInner: 'slider__inner',
-    currentSlide: 'slider__slide--current',
-    sliderContent: 'slider__content'
-  }
-}
+const sliderMH = componentsData.sliderMH;
 
 const Slidermh = ({ data }) => {
+  const originalSlidesArray = data;
+  const slidesArray = originalSlidesArray.concat(originalSlidesArray, originalSlidesArray);
 
-  const sliderData = { ...data };
-  const slidesArray = sliderData.data;
-
-  const startIndex = slidesArray.length
+  const startIndex = slidesArray.length / 3
   const lastIndex = startIndex + startIndex - 1;
 
   const [index, setIndex] = useState(startIndex);
@@ -73,7 +57,6 @@ const Slidermh = ({ data }) => {
       setSlide(slider.current.querySelector(`.${sliderMH.selectors.slide}`))
       setSlides(slider.current.querySelectorAll(`.${sliderMH.selectors.slide}`))
       setSliderInner(slider.current.querySelector(`.${sliderMH.selectors.sliderInner}`))
-      // setSlideWidth(slider.current.querySelector(`.${sliderMH.selectors.slide}`).offsetWidth)
       setSlideWidth(slider.current.offsetWidth / 2)
     }
   }, [slider])
@@ -91,8 +74,9 @@ const Slidermh = ({ data }) => {
   }, [width, height])
 
   const onWindowResize = () => {
+    console.log(width, translateDivisionAmount, slideWidth, index);
     if (slide) {
-      setSlideWidth(slide.offsetWidth)
+      setSlideWidth(slider.current.offsetWidth / 2)
     }
     if (window.innerWidth <= 767) {
       setTranslateDivisionAmount(8);
@@ -105,7 +89,7 @@ const Slidermh = ({ data }) => {
   // Set slider to be at the startIndex slide, transition: none so it's not visible to user.
   const loadSlider = () => {
     if (slider.current && sliderInner && slides && index) {
-      console.log(index, slider, index, sliderInner, slideWidth);
+      // console.log(slideWidth, translateDivisionAmount);
       sliderInner.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
       slides[index].classList.add(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide)
     }
@@ -177,24 +161,6 @@ const Slidermh = ({ data }) => {
     }
   }
 
-  // Check which slide is clicked: If current then go to link, if prev or next image clicked, then do next / prev button.
-  const checkClickedSlide = (e) => {
-    const clickedWrapper = e.currentTarget;
-    const clickedElement = e.target;
-    if (clickedWrapper.className.includes(sliderMH.selectors.currentSlide)) {
-      return true;
-    }
-    e.preventDefault();
-    if (clickedElement.tagName === 'IMG') {
-      if (clickedWrapper.previousElementSibling.className.includes(sliderMH.selectors.currentSlide)) {
-        slideRight();
-      } else if (clickedWrapper.nextElementSibling.className.includes(sliderMH.selectors.currentSlide)) {
-        slideLeft();
-      } else {
-        slideFoo();
-      }
-    }
-  }
 
   isMoving = false;
   let mouseLastPosition = 0;
@@ -232,93 +198,71 @@ const Slidermh = ({ data }) => {
     diffx = 0;
   }
 
-  if (window.PointerEvent) {
-    return (
-      <section
-        onPointerDown={sliderMouseDown}
-        onPointerMove={sliderMouseMove}
-        onPointerLeave={sliderMouseLeaveOrUp}
-        onPointerUp={sliderMouseLeaveOrUp}
-        ref={slider}
-        className="slider js-slider"
-        key={sliderData.id}
-      >
-        <button onClick={() => slideLeft()} className="slider__arrow slider__arrow--left js-arrow-left
-      "><img src={arrowLeftImg} alt="arrow-left" className="js-slide-arrow" /> </button>
-        <button onClick={() => slideRight()} className="slider__arrow slider__arrow--right js-arrow-right"> <img src={arrowRightImg} alt="arrow-right" className="js-slide-arrow" /> </button>
-        <div onTransitionEnd={(e) => { checkSlideIndex(e); expandCurrentSlide(e); }} className="slider__inner js-slider-inner">
-          {
-            [1, 2, 3].map(el => {
-              return (
-                sliderData.data.map((slide, id) => {
-                  const { url, img, title, text } = slide;
-                  return (
-                    <a onClick={checkClickedSlide} key={id} draggable="false" className="slider__slide js-slide" target="_blanc" href={url}>
-                      <img draggable="false" className="slider__image" src={img} alt="slide" />
-                      <div className="slider__content">
-                        <h3 className="slider__title">{title}</h3>
-                        <p className="slider__description">{text}&zwnj;</p>
-                        <div className="slider__action-btn">
-                          <span className="read-more">Read More</span>
-                        </div>
-                      </div>
-                    </a>
-
-                  )
-                })
-              )
-            })
-          }
-
-        </div>
-      </section >
-    )
-  };
-
+  // if (window.PointerEvent) {
   return (
     <section
-      onMouseDown={sliderMouseDown}
-      onMouseMove={sliderMouseMove}
-      onMouseLeave={sliderMouseLeaveOrUp}
-      onMouseUp={sliderMouseLeaveOrUp}
-      onTouchDown={sliderMouseDown}
-      onTouchMove={sliderMouseMove}
-      onTouchLeave={sliderMouseLeaveOrUp}
-      onTouchUp={sliderMouseLeaveOrUp}
+      onPointerDown={sliderMouseDown}
+      onPointerMove={sliderMouseMove}
+      onPointerLeave={sliderMouseLeaveOrUp}
+      onPointerUp={sliderMouseLeaveOrUp}
       ref={slider}
       className="slider js-slider"
-      key={sliderData.id}
     >
       <button onClick={() => slideLeft()} className="slider__arrow slider__arrow--left js-arrow-left
-    "><img src={arrowLeftImg} alt="arrow-left" className="js-slide-arrow" /> </button>
-      <button onClick={() => slideRight()} className="slider__arrow slider__arrow--right js-arrow-right"> <img src={arrowRightImg} alt="arrow-right" className="js-slide-arrow" /> </button>
+      ">
+        <img src={arrowLeftImg} alt="arrow-left" className="js-slide-arrow" />
+      </button>
+
+      <button onClick={() => slideRight()} className="slider__arrow slider__arrow--right js-arrow-right">
+        <img src={arrowRightImg} alt="arrow-right" className="js-slide-arrow" />
+      </button>
+
       <div onTransitionEnd={(e) => { checkSlideIndex(e); expandCurrentSlide(e); }} className="slider__inner js-slider-inner">
         {
-          [1, 2, 3].map(el => {
-            return (
-              sliderData.data.map((slide, id) => {
-                const { url, img, title, text } = slide;
-                return (
-                  <a onClick={checkClickedSlide} key={id} draggable="false" className="slider__slide js-slide" target="_blanc" href={url}>
-                    <img draggable="false" className="slider__image" src={img} alt="slide" />
-                    <div className="slider__content">
-                      <h3 className="slider__title">{title}</h3>
-                      <p className="slider__description">{text}&zwnj;</p>
-                      <div className="slider__action-btn">
-                        <span className="read-more">Read More</span>
-                      </div>
-                    </div>
-                  </a>
-
-                )
-              })
-            )
-          })
+          slidesArray.map((slide, id) =>
+            <Slidemh key={id} {...slide} id={id} index={index} slideLeft={slideLeft} slideRight={slideRight} slideFoo={slideFoo} />
+          )
         }
-
       </div>
     </section >
   )
+  // };
+
+  // return (
+  //   <section
+  //     onMouseDown={sliderMouseDown}
+  //     onMouseMove={sliderMouseMove}
+  //     onMouseLeave={sliderMouseLeaveOrUp}
+  //     onMouseUp={sliderMouseLeaveOrUp}
+  //     onTouchDown={sliderMouseDown}
+  //     onTouchMove={sliderMouseMove}
+  //     onTouchLeave={sliderMouseLeaveOrUp}
+  //     onTouchUp={sliderMouseLeaveOrUp}
+  //     ref={slider}
+  //     className="slider js-slider"
+  //   >
+  //     <button onClick={() => slideLeft()} className="slider__arrow slider__arrow--left js-arrow-left
+  //   "><img src={arrowLeftImg} alt="arrow-left" className="js-slide-arrow" /> </button>
+  //     <button onClick={() => slideRight()} className="slider__arrow slider__arrow--right js-arrow-right"> <img src={arrowRightImg} alt="arrow-right" className="js-slide-arrow" /> </button>
+  //     <div onTransitionEnd={(e) => { checkSlideIndex(e); expandCurrentSlide(e); }} className="slider__inner js-slider-inner">
+  //       {
+  //         [1, 2, 3].map(el => {
+  //           return (
+  //             slidesArray.map((slide, id) => {
+  //               const { url, img, title, text } = slide;
+  //               return (
+  //                 <a > title
+  //                 </a>
+
+  //               )
+  //             })
+  //           )
+  //         })
+  //       }
+
+  //     </div>
+  //   </section >
+  // )
 }
 
 export default Slidermh

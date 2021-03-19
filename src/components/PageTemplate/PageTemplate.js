@@ -17,8 +17,8 @@ const PageTemplate = () => {
       {/* <Modal theme={'dark'} enterStyle={'fadein'} /> */}
       <Slidermh data={sliderMHData1} />
       <div className="small-test" style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '100px' }}>
-        <Slidermh data={sliderMHData2} />
-        <Slidermh data={sliderMHData1} />
+        {/* <Slidermh data={sliderMHData2} />
+        <Slidermh data={sliderMHData1} /> */}
       </div>
 
     </div >
