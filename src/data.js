@@ -118,7 +118,6 @@ export const sliderMHData2 = {
     },
     {
       title: 'MANN+HUMMEL donates antiviral air purifiers to the Stuttgart Children\'s and Youth Hospice',
-      text: '',
       url: 'https://www.mann-hummel.com/en/the-company/current-topics/press-releases/2021/mannhummel-donates-antiviral-air-purifiers-to-the-stuttgart-childrens-and-youth-hospice/',
       img: 'https://www.mann-hummel.com/fileadmin/_processed_/3/c/csm_Spenden%C3%BCbergabe_von_antiviralen_Luftreinigern_der_MANN_HUMMEL_Group_an_das_Kinder-_und_Jugendhospiz_Stuttgart_9f94dc2345.jpg',
     },
