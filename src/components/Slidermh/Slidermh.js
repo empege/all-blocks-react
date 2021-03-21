@@ -4,12 +4,14 @@ import arrowRightImg from './arrowright.png';
 import arrowLeftImg from './arrowleft.png';
 import Slidemh from './Slidemh'
 import { componentsData } from '../../data';
+import { useWindowSize, usePreviousValue } from '../CustomHooks'
 
 /* SELECTORS */
 const sliderMH = componentsData.sliderMH;
 
 const Slidermh = ({ data }) => {
   const originalSlidesArray = data;
+  // Triple it for slide effect so prev and next slides are visible and can slide in
   const slidesArray = originalSlidesArray.concat(originalSlidesArray, originalSlidesArray);
 
   const startIndex = slidesArray.length / 3
@@ -17,56 +19,32 @@ const Slidermh = ({ data }) => {
 
   const [index, setIndex] = useState(startIndex);
   const [slideWidth, setSlideWidth] = useState('');
+  // Sta ovde mora da bude state, sta ne mora... mislim radi ovako, ali sta ima smisla?
   const [translateDivisionAmount, setTranslateDivisionAmount] = useState(2);
+  // Ako se deli sa 2, current slide zauzima 50% u sredini, a ova dva sa strane 25%, a sa 1.25, current zauzima 80%, a ovi po 10%
+  const slideWidthDivisionLarge = 2;
+  const slideWidthDivisionSmall = 1.25;
 
   const slider = useRef();
-  const [sliderInner, setSliderInner] = useState(null);
+  const sliderInner = useRef();
   const [slides, setSlides] = useState(null);
-  const [slide, setSlide] = useState(null);
 
   // Custom hook to get window width and height
-  const useWindowSize = () => {
-    const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight]);
-    useEffect(() => {
-      const handleResize = () => {
-        setWindowSize([window.innerWidth, window.innerHeight]);
-      }
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize)
-    }, [])
-    return windowSize;
-  }
   // Zasto ovo radi ja ne znam :P iako se jednom samo pozvalo...
   const [width, height] = useWindowSize();
 
   // Use previous index custom hook
-  const usePreviousValue = (value) => {
-    const ref = useRef();
-
-    useEffect(() => {
-      ref.current = value
-    }, [value])
-
-    return ref.current;
-  }
   const prevIndex = usePreviousValue(index);
 
-  // Slider se update kad se sve izlista, zato treba u dependency, jer prvo ne moze da ga nadje
+  // Nadji svu deci od sliderInner (to su sve slidovi) - radi jer ih vidi tek posle rendera uvek useEffect - dakle ne moram da proveravam da li se nesto ucitalo, use ref je sigurno ucitam jer se desava pre useEffecta
   useEffect(() => {
-    if (slider.current) {
-      setSlide(slider.current.querySelector(`.${sliderMH.selectors.slide}`))
-      setSlides(slider.current.querySelectorAll(`.${sliderMH.selectors.slide}`))
-      setSliderInner(slider.current.querySelector(`.${sliderMH.selectors.sliderInner}`))
-      setSlideWidth(slider.current.offsetWidth / 2)
-    }
-  }, [slider])
+    setSlides(Array.from(sliderInner.current.children))
+  }, [])
 
-  // Cim se update slider, dobijamo slide, dakle ovde i njegov width za dalje
+  // 
   useEffect(() => {
-    if (slide) {
-      loadSlider()
-    }
-  }, [slide])
+    loadSlider()
+  }, [slideWidth])
 
   // Koji ono bese hook da izbegnem ovaj eslint problem
   useEffect(() => {
@@ -74,23 +52,20 @@ const Slidermh = ({ data }) => {
   }, [width, height])
 
   const onWindowResize = () => {
-    console.log(width, translateDivisionAmount, slideWidth, index);
-    if (slide) {
-      setSlideWidth(slider.current.offsetWidth / 2)
-    }
     if (window.innerWidth <= 767) {
+      setSlideWidth(slider.current.offsetWidth / slideWidthDivisionSmall)
       setTranslateDivisionAmount(8);
     } else {
+      setSlideWidth(slider.current.offsetWidth / slideWidthDivisionLarge)
       setTranslateDivisionAmount(2);
     }
-    loadSlider();
   }
 
   // Set slider to be at the startIndex slide, transition: none so it's not visible to user.
   const loadSlider = () => {
-    if (slider.current && sliderInner && slides && index) {
-      // console.log(slideWidth, translateDivisionAmount);
-      sliderInner.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
+    console.log(1);
+    if (slider.current && sliderInner.current && slides && index) {
+      sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
       slides[index].classList.add(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide)
     }
   }
@@ -99,9 +74,8 @@ const Slidermh = ({ data }) => {
   let isMoving = false; //Mouse moving
 
   useEffect(() => {
-    if ((index === lastIndex && prevIndex === startIndex - 1) || (index === startIndex && prevIndex === lastIndex + 1)) {
-      // Do nothing
-    } else if (sliderInner) {
+    // If instant translateX is happening, don't do slideFoo (it would be ran twice that way)
+    if (!((index === lastIndex && prevIndex === startIndex - 1) || (index === startIndex && prevIndex === lastIndex + 1)) && sliderInner.current) {
       slideFoo();
     }
   }, [index])
@@ -121,9 +95,11 @@ const Slidermh = ({ data }) => {
 
   // Slide left and right - show slider based on current index
   const slideFoo = () => {
-    sliderInner.style.transition = '.4s all'
-    sliderInner.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
-    slides.forEach(slide => slide.classList.remove(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide))
+    if (slides) {
+      sliderInner.current.style.transition = '.4s all'
+      sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
+      slides.forEach(slide => slide.classList.remove(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide))
+    }
   }
 
   // Expand current slide after the transitions have ended
@@ -149,13 +125,13 @@ const Slidermh = ({ data }) => {
     }
     if (e.target.className.includes(sliderMH.selectors.sliderInner)) {
       if (index < startIndex) {
-        sliderInner.style.transition = 'none';
+        sliderInner.current.style.transition = 'none';
         setIndex(lastIndex);
-        sliderInner.style.transform = `translateX(${-slideWidth * lastIndex + slideWidth / translateDivisionAmount}px)`;
+        sliderInner.current.style.transform = `translateX(${-slideWidth * lastIndex + slideWidth / translateDivisionAmount}px)`;
       } else if (index > lastIndex) {
-        sliderInner.style.transition = 'none';
+        sliderInner.current.style.transition = 'none';
         setIndex(startIndex);
-        sliderInner.style.transform = `translateX(${-slideWidth * startIndex + slideWidth / translateDivisionAmount}px)`;
+        sliderInner.current.style.transform = `translateX(${-slideWidth * startIndex + slideWidth / translateDivisionAmount}px)`;
       }
       setIsSliding(false);
     }
@@ -176,8 +152,8 @@ const Slidermh = ({ data }) => {
   const sliderMouseMove = (e) => {
     if (isMoving) {
       diffx = e.pageX - mouseLastPosition;
-      sliderInner.style.transition = 'none';
-      sliderInner.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount + diffx}px)`;
+      sliderInner.current.style.transition = 'none';
+      sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount + diffx}px)`;
     }
   }
 
@@ -217,7 +193,7 @@ const Slidermh = ({ data }) => {
         <img src={arrowRightImg} alt="arrow-right" className="js-slide-arrow" />
       </button>
 
-      <div onTransitionEnd={(e) => { checkSlideIndex(e); expandCurrentSlide(e); }} className="slider__inner js-slider-inner">
+      <div ref={sliderInner} onTransitionEnd={(e) => { checkSlideIndex(e); expandCurrentSlide(e); }} className="slider__inner js-slider-inner">
         {
           slidesArray.map((slide, id) =>
             <Slidemh key={id} {...slide} id={id} index={index} slideLeft={slideLeft} slideRight={slideRight} slideFoo={slideFoo} />
