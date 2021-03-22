@@ -70,7 +70,7 @@ const Slidermh = ({ data }) => {
   }
 
   const [isSliding, setIsSliding] = useState(false); //Slide sliding
-  // Da li je okej koristiti let ovde? Ne znam da se ista rerenderuje, samo da ne moze da klikne dok se animacija ne zavrsi?
+  // Da li je okej koristiti let ovde? Ne zelim da se ista rerenderuje, samo da ne moze da klikne dok se animacija ne zavrsi?
   let isMoving = false; //Mouse moving
 
   useEffect(() => {
@@ -173,18 +173,51 @@ const Slidermh = ({ data }) => {
     diffX = 0;
   }
 
-  // if (window.PointerEvent) {
+  if (window.PointerEvent) {
+    return (
+      <section
+        onPointerDown={sliderMouseDown}
+        onPointerMove={sliderMouseMove}
+        onPointerLeave={sliderMouseLeaveOrUp}
+        onPointerUp={sliderMouseLeaveOrUp}
+        ref={slider}
+        className="slider js-slider"
+      >
+        <button onClick={() => slideLeft()} className="slider__arrow slider__arrow--left js-arrow-left
+      ">
+          <img src={arrowLeftImg} alt="arrow-left" className="js-slide-arrow" />
+        </button>
+
+        <button onClick={() => slideRight()} className="slider__arrow slider__arrow--right js-arrow-right">
+          <img src={arrowRightImg} alt="arrow-right" className="js-slide-arrow" />
+        </button>
+
+        <div ref={sliderInner} onTransitionEnd={(e) => { checkSlideIndex(e); expandCurrentSlide(e); }} className="slider__inner js-slider-inner">
+          {
+            slidesArray.map((slide, id) =>
+              <Slidemh key={id} {...slide} id={id} index={index} slideLeft={slideLeft} slideRight={slideRight} slideFoo={slideFoo} />
+            )
+          }
+        </div>
+      </section >
+    )
+  };
+
   return (
     <section
-      onPointerDown={sliderMouseDown}
-      onPointerMove={sliderMouseMove}
-      onPointerLeave={sliderMouseLeaveOrUp}
-      onPointerUp={sliderMouseLeaveOrUp}
+      onMouseDown={sliderMouseDown}
+      onMouseMove={sliderMouseMove}
+      onMouseLeave={sliderMouseLeaveOrUp}
+      onMouseUp={sliderMouseLeaveOrUp}
+      onTouchDown={sliderMouseDown}
+      onTouchMove={sliderMouseMove}
+      onTouchLeave={sliderMouseLeaveOrUp}
+      onTouchUp={sliderMouseLeaveOrUp}
       ref={slider}
       className="slider js-slider"
     >
       <button onClick={() => slideLeft()} className="slider__arrow slider__arrow--left js-arrow-left
-      ">
+    ">
         <img src={arrowLeftImg} alt="arrow-left" className="js-slide-arrow" />
       </button>
 
@@ -201,43 +234,6 @@ const Slidermh = ({ data }) => {
       </div>
     </section >
   )
-  // };
-
-  // return (
-  //   <section
-  //     onMouseDown={sliderMouseDown}
-  //     onMouseMove={sliderMouseMove}
-  //     onMouseLeave={sliderMouseLeaveOrUp}
-  //     onMouseUp={sliderMouseLeaveOrUp}
-  //     onTouchDown={sliderMouseDown}
-  //     onTouchMove={sliderMouseMove}
-  //     onTouchLeave={sliderMouseLeaveOrUp}
-  //     onTouchUp={sliderMouseLeaveOrUp}
-  //     ref={slider}
-  //     className="slider js-slider"
-  //   >
-  //     <button onClick={() => slideLeft()} className="slider__arrow slider__arrow--left js-arrow-left
-  //   "><img src={arrowLeftImg} alt="arrow-left" className="js-slide-arrow" /> </button>
-  //     <button onClick={() => slideRight()} className="slider__arrow slider__arrow--right js-arrow-right"> <img src={arrowRightImg} alt="arrow-right" className="js-slide-arrow" /> </button>
-  //     <div onTransitionEnd={(e) => { checkSlideIndex(e); expandCurrentSlide(e); }} className="slider__inner js-slider-inner">
-  //       {
-  //         [1, 2, 3].map(el => {
-  //           return (
-  //             slidesArray.map((slide, id) => {
-  //               const { url, img, title, text } = slide;
-  //               return (
-  //                 <a > title
-  //                 </a>
-
-  //               )
-  //             })
-  //           )
-  //         })
-  //       }
-
-  //     </div>
-  //   </section >
-  // )
 }
 
 export default Slidermh
