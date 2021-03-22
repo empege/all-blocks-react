@@ -27,10 +27,10 @@ const Slidermh = ({ data }) => {
 
   const slider = useRef();
   const sliderInner = useRef();
+  // Da li nekako moze lista svih elemenata da bude useRef ili je ovako ok?
   const [slides, setSlides] = useState(null);
 
   // Custom hook to get window width and height
-  // Zasto ovo radi ja ne znam :P iako se jednom samo pozvalo...
   const [width, height] = useWindowSize();
 
   // Use previous index custom hook
@@ -41,12 +41,14 @@ const Slidermh = ({ data }) => {
     setSlides(Array.from(sliderInner.current.children))
   }, [])
 
-  // 
+  // Kad se dobije tek ga stavi, i menjaj na resize posle uvek
+  // Koji ono bese hook da izbegnem ovaj eslint problem
   useEffect(() => {
-    loadSlider()
+    if (slideWidth) {
+      loadSlider()
+    }
   }, [slideWidth])
 
-  // Koji ono bese hook da izbegnem ovaj eslint problem
   useEffect(() => {
     onWindowResize();
   }, [width, height])
@@ -61,16 +63,15 @@ const Slidermh = ({ data }) => {
     }
   }
 
-  // Set slider to be at the startIndex slide, transition: none so it's not visible to user.
   const loadSlider = () => {
-    console.log(1);
     if (slider.current && sliderInner.current && slides && index) {
       sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
-      slides[index].classList.add(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide)
+      slides[index].classList.add(sliderMH.selectorsCSS.currentSlide)
     }
   }
 
   const [isSliding, setIsSliding] = useState(false); //Slide sliding
+  // Da li je okej koristiti let ovde? Ne znam da se ista rerenderuje, samo da ne moze da klikne dok se animacija ne zavrsi?
   let isMoving = false; //Mouse moving
 
   useEffect(() => {
@@ -98,7 +99,7 @@ const Slidermh = ({ data }) => {
     if (slides) {
       sliderInner.current.style.transition = '.4s all'
       sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
-      slides.forEach(slide => slide.classList.remove(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide))
+      slides.forEach(slide => slide.classList.remove(sliderMH.selectorsCSS.currentSlide))
     }
   }
 
@@ -109,11 +110,11 @@ const Slidermh = ({ data }) => {
     }
     if (e.target.className.includes(sliderMH.selectors.sliderInner)) {
       if (index < startIndex) {
-        slides[lastIndex].classList.add(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide)
+        slides[lastIndex].classList.add(sliderMH.selectorsCSS.currentSlide)
       } else if (index > lastIndex) {
-        slides[startIndex].classList.add(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide)
+        slides[startIndex].classList.add(sliderMH.selectorsCSS.currentSlide)
       } else {
-        slides[index].classList.add(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide)
+        slides[index].classList.add(sliderMH.selectorsCSS.currentSlide)
       }
     }
   }
@@ -137,10 +138,9 @@ const Slidermh = ({ data }) => {
     }
   }
 
-
-  isMoving = false;
+  // Isto pitanje, ako ne zelim rerender da li je let ok u reactu? Ili mi je cela logika uzas? x(
   let mouseLastPosition = 0;
-  let diffx = 0;
+  let diffX = 0;
 
   const sliderMouseDown = (e) => {
     if (!e.target.className.includes(sliderMH.selectors.sliderArrow) && e.button === 0) {
@@ -151,27 +151,27 @@ const Slidermh = ({ data }) => {
 
   const sliderMouseMove = (e) => {
     if (isMoving) {
-      diffx = e.pageX - mouseLastPosition;
+      diffX = e.pageX - mouseLastPosition;
       sliderInner.current.style.transition = 'none';
-      sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount + diffx}px)`;
+      sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount + diffX}px)`;
     }
   }
 
   const sliderMouseLeaveOrUp = () => {
     isMoving = false;
-    if (diffx >= slideWidth / 2) {
+    if (diffX >= slideWidth / 2) {
       slideLeft();
     }
-    if (diffx <= - (slideWidth / 2)) {
+    if (diffX <= - (slideWidth / 2)) {
       slideRight();
     }
-    if (diffx > - (slideWidth / 2) && diffx < slideWidth / 2 && diffx !== 0) {
+    if (diffX > - (slideWidth / 2) && diffX < slideWidth / 2 && diffX !== 0) {
       slideFoo();
     }
-    if (diffx === 0 && !slider.current.querySelector(`.${sliderMH.selectors.currentSlide}`)) {
-      slides[index].classList.add(sliderMH.selectors.currentSlide, sliderMH.selectorsCSS.currentSlide)
+    if (diffX === 0 && !slider.current.querySelector(`.${sliderMH.selectors.currentSlide}`)) {
+      slides[index].classList.add(sliderMH.selectorsCSS.currentSlide)
     }
-    diffx = 0;
+    diffX = 0;
   }
 
   // if (window.PointerEvent) {
