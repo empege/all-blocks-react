@@ -10,6 +10,7 @@
   border-right: 3px solid $color-primary-dark;
   color: $color-secondary-text;
   text-align: center;
+  z-index: 10;
   &--active {left: 0;}
   &__title {
     @include displayFlex(space-between, center);

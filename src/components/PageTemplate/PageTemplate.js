@@ -11,7 +11,7 @@ const PageTemplate = () => {
   return (
     <div className="pageTemplate">
       <h1 className="pageTemplate__title">Some Page and Accordion khm... Accordingly</h1>
-      {/* <Accordion data={pageAccordionData} theme={'primary'} /> */}
+      <Accordion data={pageAccordionData} theme={'primary'} />
       <Sidebar />
       {/* <Slider data={sliderData} /> */}
       {/* <Modal theme={'dark'} enterStyle={'fadein'} /> */}
