@@ -42,7 +42,7 @@ const Slidermh = ({ data }) => {
   }, [])
 
   // Kad se dobije tek ga stavi, i menjaj na resize posle uvek
-  // Koji ono bese hook da izbegnem ovaj eslint problem
+  // Koji ono bese hook da izbegnem ovaj eslint problem - nisam umeo sa useCallback... druga logika?
   useEffect(() => {
     if (slideWidth) {
       loadSlider()
@@ -64,10 +64,9 @@ const Slidermh = ({ data }) => {
   }
 
   const loadSlider = () => {
-    if (slider.current && sliderInner.current && slides && index) {
-      sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
-      slides[index].classList.add(sliderMH.selectorsCSS.currentSlide)
-    }
+    console.log(index);
+    sliderInner.current.style.transform = `translateX(${-slideWidth * index + slideWidth / translateDivisionAmount}px)`;
+    slides[index].classList.add(sliderMH.selectorsCSS.currentSlide)
   }
 
   const [isSliding, setIsSliding] = useState(false); //Slide sliding
