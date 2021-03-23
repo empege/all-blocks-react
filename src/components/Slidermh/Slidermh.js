@@ -43,11 +43,17 @@ const Slidermh = ({ data }) => {
 
   // Kad se dobije tek ga stavi, i menjaj na resize posle uvek
   // Koji ono bese hook da izbegnem ovaj eslint problem - nisam umeo sa useCallback... druga logika?
+  // useEffect(() => {
+  //   if (slideWidth) {
+  //     loadSlider()
+  //   }
+  // }, [slideWidth])
+  // Moze bez dependency, ali da li zelim da se svaki put ovo pokrece sta god da se desi? Radi...
   useEffect(() => {
     if (slideWidth) {
       loadSlider()
     }
-  }, [slideWidth])
+  })
 
   useEffect(() => {
     onWindowResize();

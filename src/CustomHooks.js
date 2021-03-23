@@ -23,15 +23,15 @@ export const useFetch = (url) => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
 
-  const getProducts = useCallback(async () => {
+  const getItems = useCallback(async () => {
     const response = await fetch(url);
-    const products = await response.json();
-    setItems(products);
+    const data = await response.json();
+    setItems(data);
     setLoading(false);
   }, [url]);
 
   useEffect(() => {
-    getProducts();
-  }, [url, getProducts]);
+    getItems();
+  }, [url, getItems]);
   return { loading, items };
 };
