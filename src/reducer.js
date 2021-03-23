@@ -1,3 +1,4 @@
+// Nije u upotrebi trenutno xD
 const reducer = (state, action) => {
 
   // Selectors
