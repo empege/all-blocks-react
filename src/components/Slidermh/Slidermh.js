@@ -4,7 +4,7 @@ import arrowRightImg from './arrowright.png';
 import arrowLeftImg from './arrowleft.png';
 import Slidemh from './Slidemh'
 import { componentsData } from '../../data';
-import { useWindowSize, usePreviousValue } from '../CustomHooks'
+import { useWindowSize, usePreviousValue } from '../../CustomHooks'
 
 /* SELECTORS */
 const sliderMH = componentsData.sliderMH;
